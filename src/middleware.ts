@@ -25,5 +25,7 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
+  // Đường dẫn cố định (e.g., "/login").
+  // Đường dẫn động với tham số (e.g., "/manage/:path*").
   matcher: ["/manage/:path*", "/login"],
 };
