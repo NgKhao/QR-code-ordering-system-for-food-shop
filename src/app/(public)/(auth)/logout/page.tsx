@@ -1,7 +1,7 @@
 "use client";
 import {
   getAccessTokenFromLocalStorage,
-  getRefreshTokenToLocalStorage,
+  getRefreshTokenFromLocalStorage,
 } from "@/lib/utils";
 import { useLogoutMutation } from "@/queries/useAuth";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -19,7 +19,7 @@ export default function LougoutPage() {
     if (
       ref.current ||
       (refreshTokenFromUrl &&
-        refreshTokenFromUrl != getRefreshTokenToLocalStorage()) ||
+        refreshTokenFromUrl != getRefreshTokenFromLocalStorage()) ||
       (accessTokenFromUrl &&
         accessTokenFromUrl != getAccessTokenFromLocalStorage())
     )
