@@ -1,4 +1,5 @@
 "use client";
+import { useAppContext } from "@/components/app-provider";
 import {
   getAccessTokenFromLocalStorage,
   getRefreshTokenFromLocalStorage,
@@ -10,6 +11,7 @@ import { useEffect, useRef } from "react";
 export default function LougoutPage() {
   const { mutateAsync } = useLogoutMutation();
   const router = useRouter();
+  const { setIsAuth } = useAppContext();
   const searchParams = useSearchParams();
   const refreshTokenFromUrl = searchParams.get("refreshToken");
   const accessTokenFromUrl = searchParams.get("accessToken");
@@ -17,20 +19,23 @@ export default function LougoutPage() {
   const ref = useRef<any>(null);
   useEffect(() => {
     if (
-      ref.current ||
-      (refreshTokenFromUrl &&
-        refreshTokenFromUrl != getRefreshTokenFromLocalStorage()) ||
-      (accessTokenFromUrl &&
-        accessTokenFromUrl != getAccessTokenFromLocalStorage())
-    )
-      return;
-    ref.current = mutateAsync;
-    mutateAsync().then((res) => {
-      setTimeout(() => {
-        ref.current = null;
-      }, 1000);
-      router.push("/login");
-    });
+      !ref.current &&
+      ((refreshTokenFromUrl &&
+        refreshTokenFromUrl == getRefreshTokenFromLocalStorage()) ||
+        (accessTokenFromUrl &&
+          accessTokenFromUrl == getAccessTokenFromLocalStorage()))
+    ) {
+      ref.current = mutateAsync;
+      mutateAsync().then((res) => {
+        setTimeout(() => {
+          ref.current = null;
+        }, 1000);
+        setIsAuth(false);
+        router.push("/login");
+      });
+    } else {
+      router.push("/");
+    }
   }, [mutateAsync, router, refreshTokenFromUrl, accessTokenFromUrl]);
   return (
     <div>

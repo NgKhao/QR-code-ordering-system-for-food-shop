@@ -9,7 +9,7 @@ const UNAUTHERIZED_PATHS = ["/login", "/logout", "/refresh-token"];
 export default function RefreshToken() {
   const pathname = usePathname();
   const router = useRouter();
-  console.log(pathname);
+  // console.log(pathname);
   useEffect(() => {
     if (UNAUTHERIZED_PATHS.includes(pathname)) return;
     let interval: any = null;
