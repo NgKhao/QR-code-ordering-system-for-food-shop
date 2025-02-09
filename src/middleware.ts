@@ -7,8 +7,8 @@ const unAuthPaths = ["/login"];
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const accessToken = Boolean(request.cookies.get("accessToken")?.value);
-  const refreshToken = Boolean(request.cookies.get("refreshToken")?.value);
+  const accessToken = request.cookies.get("accessToken")?.value;
+  const refreshToken = request.cookies.get("refreshToken")?.value;
   // console.log(isAuth);
 
   // chưa login thì k cho vào private paths
@@ -27,11 +27,9 @@ export function middleware(request: NextRequest) {
     !accessToken &&
     refreshToken
   ) {
-    const url = new URL("/logout", request.url);
-    url.searchParams.set(
-      "refreshToken",
-      request.cookies.get("refreshToken")?.value ?? ""
-    );
+    const url = new URL("/refresh-token", request.url);
+    url.searchParams.set("refreshToken", refreshToken);
+    url.searchParams.set("redirect", pathname);
     return NextResponse.redirect(url);
   }
   return NextResponse.next();
