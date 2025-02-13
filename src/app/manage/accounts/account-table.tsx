@@ -53,7 +53,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useSearchParams } from "next/navigation";
 import AutoPagination from "@/components/auto-pagination";
-import { useGetAccount, useGetAccountList } from "@/queries/useAccount";
+import { useGetAccountList } from "@/queries/useAccount";
 
 type AccountItem = AccountListResType["data"][0];
 
@@ -122,7 +122,7 @@ export const columns: ColumnDef<AccountType>[] = [
         setEmployeeDelete(row.original);
       };
       return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
