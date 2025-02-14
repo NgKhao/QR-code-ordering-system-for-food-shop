@@ -5,6 +5,8 @@ import { toast } from "@/hooks/use-toast";
 import { EntityError } from "./http";
 import jwt from "jsonwebtoken";
 import authApiRequest from "@/apiRequests/auth";
+import { DishStatus, OrderStatus, TableStatus } from "@/constants/type";
+import envConfig from "@/config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -119,4 +121,66 @@ export const checkAndRefreshToken = async (param?: {
       }
     }
   }
+};
+
+export const formatCurrency = (number: number) => {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(number);
+};
+
+export const getVietnameseDishStatus = (
+  status: (typeof DishStatus)[keyof typeof DishStatus]
+) => {
+  switch (status) {
+    case DishStatus.Available:
+      return "Có sẵn";
+    case DishStatus.Unavailable:
+      return "Không có sẵn";
+    default:
+      return "Ẩn";
+  }
+};
+
+export const getVietnameseOrderStatus = (
+  status: (typeof OrderStatus)[keyof typeof OrderStatus]
+) => {
+  switch (status) {
+    case OrderStatus.Delivered:
+      return "Đã phục vụ";
+    case OrderStatus.Paid:
+      return "Đã thanh toán";
+    case OrderStatus.Pending:
+      return "Chờ xử lý";
+    case OrderStatus.Processing:
+      return "Đang nấu";
+    default:
+      return "Từ chối";
+  }
+};
+
+export const getVietnameseTableStatus = (
+  status: (typeof TableStatus)[keyof typeof TableStatus]
+) => {
+  switch (status) {
+    case TableStatus.Available:
+      return "Có sẵn";
+    case TableStatus.Reserved:
+      return "Đã đặt";
+    default:
+      return "Ẩn";
+  }
+};
+
+export const getTableLink = ({
+  token,
+  tableNumber,
+}: {
+  token: string;
+  tableNumber: number;
+}) => {
+  return (
+    envConfig.NEXT_PUBLIC_URL + "/tables/" + tableNumber + "?token=" + token
+  );
 };
