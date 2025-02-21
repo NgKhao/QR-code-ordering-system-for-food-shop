@@ -43,7 +43,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { getVietnameseTableStatus, getTableLink } from "@/lib/utils";
+import { getVietnameseTableStatus } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import AutoPagination from "@/components/auto-pagination";
 import { TableListResType } from "@/schemaValidations/table.schema";
@@ -73,6 +73,10 @@ export const columns: ColumnDef<TableItem>[] = [
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("number")}</div>
     ),
+    filterFn: (rows, columnId, filterValue) => {
+      if (!filterValue) return true;
+      return String(filterValue) == String(rows.getValue("number"));
+    },
   },
   {
     accessorKey: "capacity",
@@ -113,7 +117,7 @@ export const columns: ColumnDef<TableItem>[] = [
         setTableDelete(row.original);
       };
       return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
