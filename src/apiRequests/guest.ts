@@ -1,6 +1,5 @@
 import http from "@/lib/http";
 import {
-  LoginResType,
   LogoutBodyType,
   RefreshTokenBodyType,
   RefreshTokenResType,
@@ -18,7 +17,9 @@ const guestApiRequest = {
   sLogin: (body: GuestLoginBodyType) =>
     http.post<GuestLoginResType>("guest/auth/login", body),
   login: (body: GuestLoginBodyType) =>
-    http.post<LoginResType>("/api/guest/auth/login", body, { baseUrl: "" }),
+    http.post<GuestLoginResType>("/api/guest/auth/login", body, {
+      baseUrl: "",
+    }),
   sLogout: (
     body: LogoutBodyType & {
       accessToken: string;
