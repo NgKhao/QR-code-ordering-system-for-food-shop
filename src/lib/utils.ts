@@ -5,9 +5,10 @@ import { toast } from "@/hooks/use-toast";
 import { EntityError } from "./http";
 import jwt from "jsonwebtoken";
 import authApiRequest from "@/apiRequests/auth";
-import { DishStatus, OrderStatus, TableStatus } from "@/constants/type";
+import { DishStatus, OrderStatus, Role, TableStatus } from "@/constants/type";
 import envConfig from "@/config";
 import { TokenPayload } from "@/types/jwt.types";
+import guestApiRequest from "@/apiRequests/guest";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -103,7 +104,11 @@ export const checkAndRefreshToken = async (param?: {
     // gọi api refresh token
 
     try {
-      const res = await authApiRequest.refreshToken();
+      const role = decodeRefreshToken.role;
+      const res =
+        role == Role.Guest
+          ? await guestApiRequest.refreshToken()
+          : await authApiRequest.refreshToken();
       const { accessToken, refreshToken } = res.payload.data;
       setAccessTokenToLocalStorage(accessToken);
       setRefreshTokenToLocalStorage(refreshToken);
