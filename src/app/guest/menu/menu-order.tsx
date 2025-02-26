@@ -1,33 +1,47 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useGetDishList } from "@/queries/useDish";
 import { formatCurrency } from "@/lib/utils";
-
-// fake data
-const dishes = [
-  {
-    id: 1,
-    name: "Pizza hải sản",
-    description: "Pizza hải sản ngon nhất thế giới",
-    price: 100000,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 2,
-    name: "Pizza thịt bò",
-    description: "Pizza thịt bò ngon nhất thế giới",
-    price: 150000,
-    image: "https://via.placeholder.com/150",
-  },
-];
+import Quantity from "./quantity";
+import { GuestCreateOrdersBodyType } from "@/schemaValidations/guest.schema";
 
 export default function MenuOrder() {
   const { data } = useGetDishList();
   const dishes = data?.payload.data ?? [];
+  const [orders, setOrders] = useState<GuestCreateOrdersBodyType>([]);
+
+  const totalPrice = dishes.reduce((result, dish) => {
+    const order = orders.find((order) => order.dishId == dish.id);
+    if (!order) return result;
+    return result + order.quantity * dish.price;
+  }, 0);
+
+  const handleQuantityChange = (dishId: number, quantity: number) => {
+    // prevOrders đại diện cho danh sách đơn hàng hiện tại trước khi cập nhật.
+    setOrders((prevOrders) => {
+      if (quantity == 0) {
+        // loại bỏ món ăn có dishId trùng với dishId cần cập nhật
+        // .filter(callback) tạo một mảng mới chỉ chứa các phần tử thỏa mãn điều kiện trong callback.
+        return prevOrders.filter((order) => order.dishId != dishId);
+      }
+      const index = prevOrders.findIndex((order) => order.dishId == dishId);
+
+      // Nếu index == -1 (món ăn chưa có trong đơn hàng), thêm mới bằng cách spread (...prevOrders) và thêm {dishId, quantity}
+      if (index == -1) {
+        return [...prevOrders, { dishId, quantity }];
+      }
+
+      // Nếu món ăn đã có → Cập nhật số lượng
+      // Tạo bản sao newOrders từ prevOrders để đảm bảo không thay đổi trực tiếp state (tránh mutation).
+      const newOrders = [...prevOrders];
+      newOrders[index] = { ...newOrders[index], quantity };
+      return newOrders;
+    });
+  };
+  // console.log(orders);
+
   return (
     <>
       {dishes.map((dish) => (
@@ -50,22 +64,19 @@ export default function MenuOrder() {
             </p>
           </div>
           <div className="flex-shrink-0 ml-auto flex justify-center items-center">
-            <div className="flex gap-1 ">
-              <Button className="h-6 w-6 p-0">
-                <Minus className="w-3 h-3" />
-              </Button>
-              <Input type="text" readOnly className="h-6 p-1 w-8" />
-              <Button className="h-6 w-6 p-0">
-                <Plus className="w-3 h-3" />
-              </Button>
-            </div>
+            <Quantity
+              onChange={(value) => handleQuantityChange(dish.id, value)}
+              value={
+                orders.find((order) => order.dishId == dish.id)?.quantity ?? 0
+              }
+            />
           </div>
         </div>
       ))}
       <div className="sticky bottom-0">
         <Button className="w-full justify-between">
-          <span>Giỏ hàng · 2 món</span>
-          <span>100,000 đ</span>
+          <span>Giỏ hàng · {orders.length} món</span>
+          <span>{formatCurrency(totalPrice)}</span>
         </Button>
       </div>
     </>
