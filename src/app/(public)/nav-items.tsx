@@ -19,8 +19,13 @@ const menuItems: {
     href: "/",
   },
   {
-    title: "Món ăn",
+    title: "Menu",
     href: "/guest/menu", // authRequired = underfine: login or chưa login đều cho hiển thị
+    role: [Role.Guest],
+  },
+  {
+    title: "Đơn hàng",
+    href: "/guest/orders", // authRequired = underfine: login or chưa login đều cho hiển thị
     role: [Role.Guest],
   },
   {
