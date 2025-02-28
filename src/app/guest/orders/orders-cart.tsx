@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import socket from "@/lib/socket";
 import { UpdateOrderResType } from "@/schemaValidations/order.schema";
+import { toast } from "@/hooks/use-toast";
 
 export default function OrdersCart() {
   const { data, refetch } = useGuestGetOrderListQuery();
@@ -25,6 +26,17 @@ export default function OrdersCart() {
     }
 
     function onUpdateOrder(data: UpdateOrderResType["data"]) {
+      console.log(data);
+      const {
+        dishSnapshot: { name },
+        quantity,
+        status,
+      } = data;
+      toast({
+        description: `Món ${name} (SL: ${quantity}) vừa được cập nhật sang trạng thái "${getVietnameseOrderStatus(
+          status
+        )}"`,
+      });
       refetch();
     }
 
