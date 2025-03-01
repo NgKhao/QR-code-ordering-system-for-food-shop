@@ -172,7 +172,7 @@ export default function OrderTable() {
     }
 
     // case ngày hiện tại có trong khoảng ngày lọc ngày mới cho refecth
-    function refech() {
+    function refetch() {
       const now = new Date();
       if (now >= fromDate && now <= toDate) {
         refecthOrderList();
@@ -191,7 +191,7 @@ export default function OrderTable() {
           status
         )}"`,
       });
-      refech();
+      refetch();
     }
 
     function onNewOrder(data: GuestCreateOrdersResType["data"]) {
@@ -199,19 +199,28 @@ export default function OrderTable() {
       toast({
         description: `${guest?.name} tại bàn ${guest?.tableNumber} vừa đặt ${data.length} đơn`,
       });
-      refech();
+      refetch();
     }
 
+    function onPayment(data: PayGuestOrdersResType["data"]) {
+      const { guest } = data[0];
+      toast({
+        description: `${guest?.name} tại bàn ${guest?.tableNumber} thanh toán thành công ${data.length} đơn`,
+      });
+      refetch();
+    }
     socket.on("update-order", onUpdateOrder);
     socket.on("new-order", onNewOrder);
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
+    socket.on("payment", onPayment);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
       socket.off("new-order", onNewOrder);
       socket.off("update-order", onUpdateOrder);
+      socket.off("payment", onPayment);
     };
   }, [refecthOrderList, fromDate, toDate]);
 
