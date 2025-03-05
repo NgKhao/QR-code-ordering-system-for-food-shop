@@ -77,6 +77,7 @@ export const removeTokensFromLocalStorage = () => {
 export const checkAndRefreshToken = async (param?: {
   onError?: () => void;
   onSuccess?: () => void;
+  forceRefresh?: boolean;
 }) => {
   // không nên đưa logic lấy access và refresh token ra khỏi func checkAndRefreshToken
   // vì để mỗi lần mà checkAndRefreshToken() được gọi thì nó sẽ lấy access và refresh token mới
@@ -100,8 +101,9 @@ export const checkAndRefreshToken = async (param?: {
   // thời gian còn lại sẽ tính: decodeAccessToken.exp - now
   // thời gian hết hạn của access token: decodeAccessToken.exp - decodeAccessToken.iat
   if (
+    param?.forceRefresh ||
     decodeAccessToken.exp - now <
-    (decodeAccessToken.exp - decodeAccessToken.iat) / 3
+      (decodeAccessToken.exp - decodeAccessToken.iat) / 3
   ) {
     // gọi api refresh token
 
