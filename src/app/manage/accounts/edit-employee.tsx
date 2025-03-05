@@ -73,6 +73,15 @@ export default function EditEmployee({
   const avatar = form.watch("avatar");
   const name = form.watch("name");
   const changePassword = form.watch("changePassword");
+
+  // Theo dõi thay đổi của switch và reset password khi tắt
+  useEffect(() => {
+    if (!changePassword) {
+      form.setValue("password", undefined);
+      form.setValue("confirmPassword", undefined);
+    }
+  }, [changePassword, form]);
+
   const previewAvatarFromFile = useMemo(() => {
     if (file) {
       return URL.createObjectURL(file);
@@ -279,7 +288,14 @@ export default function EditEmployee({
                       <div className="col-span-3 w-full space-y-2">
                         <Switch
                           checked={field.value}
-                          onCheckedChange={field.onChange}
+                          onCheckedChange={(checked) => {
+                            field.onChange(checked);
+                            // Optional: Clear password fields when switch is turned off
+                            if (!checked) {
+                              form.setValue("password", undefined);
+                              form.setValue("confirmPassword", undefined);
+                            }
+                          }}
                         />
                         <FormMessage />
                       </div>
@@ -301,6 +317,7 @@ export default function EditEmployee({
                             className="w-full"
                             type="password"
                             {...field}
+                            value={field.value ?? ""}
                           />
                           <FormMessage />
                         </div>
@@ -325,6 +342,7 @@ export default function EditEmployee({
                             className="w-full"
                             type="password"
                             {...field}
+                            value={field.value ?? ""}
                           />
                           <FormMessage />
                         </div>
