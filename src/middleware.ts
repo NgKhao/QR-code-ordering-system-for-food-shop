@@ -4,6 +4,7 @@ import { decodeToken } from "./lib/utils";
 import { Role } from "./constants/type";
 
 const managePaths = ["/manage"];
+const onlyOwnerPaths = ["/manage/accounts"];
 const guestPaths = ["/guest"];
 const privatePaths = [...managePaths, ...guestPaths];
 const unAuthPaths = ["/login"];
@@ -50,7 +51,15 @@ export function middleware(request: NextRequest) {
     const isNotGuestGoToManagePath =
       role != Role.Guest &&
       guestPaths.some((path) => pathname.startsWith(path));
-    if (isGuestGoToManagePath || isNotGuestGoToManagePath)
+    //không phải owner nhưng cố tình truy cập vào route dành cho owner
+    const isNotOwnerGoToOwnerPath =
+      role != Role.Owner &&
+      onlyOwnerPaths.some((path) => pathname.startsWith(path));
+    if (
+      isGuestGoToManagePath ||
+      isNotGuestGoToManagePath ||
+      isNotOwnerGoToOwnerPath
+    )
       return NextResponse.redirect(new URL("/", request.url));
     return NextResponse.next();
   }
