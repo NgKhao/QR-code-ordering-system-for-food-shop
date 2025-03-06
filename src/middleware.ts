@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { decodeToken } from "./lib/utils";
 import { Role } from "./constants/type";
+import { TokenPayload } from "./types/jwt.types";
+import jwt from "jsonwebtoken";
 
 const managePaths = ["/manage"];
 const onlyOwnerPaths = ["/manage/accounts"];
@@ -70,4 +71,8 @@ export const config = {
   // Đường dẫn cố định (e.g., "/login").
   // Đường dẫn động với tham số (e.g., "/manage/:path*").
   matcher: ["/manage/:path*", "/guest/:path*", "/login"],
+};
+
+export const decodeToken = (token: string) => {
+  return jwt.decode(token) as TokenPayload;
 };

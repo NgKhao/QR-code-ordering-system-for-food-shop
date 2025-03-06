@@ -1,13 +1,14 @@
 "use client";
-import socket from "@/lib/socket";
 import { checkAndRefreshToken } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useAppContext } from "./app-provider";
 
 // Những page sẽ không check refresh token
 const UNAUTHERIZED_PATHS = ["/login", "/logout", "/refresh-token"];
 export default function RefreshToken() {
+  const { socket, setSocket } = useAppContext();
   const pathname = usePathname();
   const router = useRouter();
   // console.log(pathname);
@@ -19,7 +20,8 @@ export default function RefreshToken() {
       checkAndRefreshToken({
         onError: () => {
           clearInterval(interval);
-
+          socket?.disconnect();
+          setSocket(undefined);
           router.push("/login");
         },
       });
@@ -27,8 +29,12 @@ export default function RefreshToken() {
     const TIMEOUT = 1000;
     interval = setInterval(onRefreshToken, TIMEOUT);
 
+    if (socket?.connected) {
+      onConnect();
+    }
+
     function onConnect() {
-      console.log(socket.id);
+      console.log(socket?.id);
     }
 
     function onDisconnect() {
@@ -38,16 +44,16 @@ export default function RefreshToken() {
     function onRefreshTokenSocket() {
       onRefreshToken(true);
     }
-    socket.on("connect", onConnect);
-    socket.on("disconnect", onDisconnect);
-    socket.on("refresh-token", onRefreshTokenSocket);
+    socket?.on("connect", onConnect);
+    socket?.on("disconnect", onDisconnect);
+    socket?.on("refresh-token", onRefreshTokenSocket);
 
     return () => {
       clearInterval(interval);
-      socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
-      socket.off("refresh-token", onRefreshTokenSocket);
+      socket?.off("connect", onConnect);
+      socket?.off("disconnect", onDisconnect);
+      socket?.off("refresh-token", onRefreshTokenSocket);
     };
-  }, [pathname, router]);
+  }, [pathname, router, socket, setSocket]);
   return null;
 }
