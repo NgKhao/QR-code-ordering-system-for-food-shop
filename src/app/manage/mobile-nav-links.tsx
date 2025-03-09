@@ -1,6 +1,6 @@
 "use client";
 import menuItems from "@/app/manage/menuItems";
-import { useAppContext } from "@/components/app-provider";
+import { useAppStore } from "@/components/app-provider";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 
 export default function MobileNavLinks() {
   const pathname = usePathname();
-  const { role } = useAppContext();
+  const role = useAppStore((stase) => stase.role);
   return (
     <Sheet>
       <SheetTrigger asChild>

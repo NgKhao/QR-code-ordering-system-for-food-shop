@@ -1,6 +1,6 @@
 "use client";
 
-import { useAppContext } from "@/components/app-provider";
+import { useAppStore } from "@/components/app-provider";
 import { Role } from "@/constants/type";
 import { cn, handleErrorApi } from "@/lib/utils";
 import { useLogoutMutation } from "@/queries/useAuth";
@@ -52,7 +52,11 @@ const menuItems: {
 ];
 
 export default function NavItems({ className }: { className?: string }) {
-  const { role, setRole, socket, setSocket } = useAppContext();
+  const role = useAppStore((stase) => stase.role);
+  const setRole = useAppStore((stase) => stase.setRole);
+  const socket = useAppStore((stase) => stase.socket);
+  const setSocket = useAppStore((stase) => stase.setSocket);
+
   const logoutMutation = useLogoutMutation();
   const router = useRouter();
   const logout = async () => {

@@ -1,7 +1,7 @@
 import { useLogoutMutation } from "@/queries/useAuth";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useAppContext } from "./app-provider";
+import { useAppStore } from "./app-provider";
 import { handleErrorApi } from "@/lib/utils";
 
 // This component listens to the logout event from the socket and handles the logout process
@@ -13,7 +13,9 @@ export default function ListenLogoutSocket() {
   const pathname = usePathname();
   const router = useRouter();
   const { isPending, mutateAsync } = useLogoutMutation();
-  const { setRole, socket, setSocket } = useAppContext();
+  const setRole = useAppStore((stase) => stase.setRole);
+  const socket = useAppStore((stase) => stase.socket);
+  const setSocket = useAppStore((stase) => stase.setSocket);
   useEffect(() => {
     if (UNAUTHENTICATED_PATH.includes(pathname)) return;
     async function onLogout() {

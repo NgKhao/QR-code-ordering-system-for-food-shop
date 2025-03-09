@@ -10,13 +10,13 @@ import {
 } from "@/schemaValidations/order.schema";
 import { toast } from "@/hooks/use-toast";
 import { OrderStatus } from "@/constants/type";
-import { useAppContext } from "@/components/app-provider";
+import { useAppStore } from "@/components/app-provider";
 
 export default function OrdersCart() {
   const { data, refetch } = useGuestGetOrderListQuery();
   const orders = useMemo(() => data?.payload.data ?? [], [data]);
   // console.log(orders);
-  const { socket } = useAppContext();
+  const socket = useAppStore((stase) => stase.socket);
   const { waitingForPaying, paid } = useMemo(() => {
     return orders.reduce(
       (result, order) => {

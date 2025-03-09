@@ -3,12 +3,13 @@ import { checkAndRefreshToken } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useAppContext } from "./app-provider";
+import { useAppStore } from "./app-provider";
 
 // Những page sẽ không check refresh token
 const UNAUTHERIZED_PATHS = ["/login", "/logout", "/refresh-token"];
 export default function RefreshToken() {
-  const { socket, setSocket } = useAppContext();
+  const socket = useAppStore((stase) => stase.socket);
+  const setSocket = useAppStore((stase) => stase.setSocket);
   const pathname = usePathname();
   const router = useRouter();
   // console.log(pathname);

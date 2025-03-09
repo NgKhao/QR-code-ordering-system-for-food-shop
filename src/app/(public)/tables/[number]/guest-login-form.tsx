@@ -13,11 +13,12 @@ import {
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useGuestLoginMutation } from "@/queries/useGuest";
-import { useAppContext } from "@/components/app-provider";
+import { useAppStore } from "@/components/app-provider";
 import { generateSocketInstance, handleErrorApi } from "@/lib/utils";
 
 export default function GuestLoginForm() {
-  const { setRole, setSocket } = useAppContext();
+  const setRole = useAppStore((stase) => stase.setRole);
+  const setSocket = useAppStore((stase) => stase.setSocket);
   const searchParams = useSearchParams();
   const params = useParams();
   console.log(params, searchParams.get("token"));

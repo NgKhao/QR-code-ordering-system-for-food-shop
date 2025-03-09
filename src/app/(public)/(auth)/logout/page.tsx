@@ -1,5 +1,5 @@
 "use client";
-import { useAppContext } from "@/components/app-provider";
+import { useAppStore } from "@/components/app-provider";
 import {
   getAccessTokenFromLocalStorage,
   getRefreshTokenFromLocalStorage,
@@ -11,7 +11,9 @@ import { Suspense, useEffect, useRef } from "react";
 function LougoutComponent() {
   const { mutateAsync } = useLogoutMutation();
   const router = useRouter();
-  const { setRole, socket, setSocket } = useAppContext();
+  const setRole = useAppStore((stase) => stase.setRole);
+  const socket = useAppStore((stase) => stase.socket);
+  const setSocket = useAppStore((stase) => stase.setSocket);
   const searchParams = useSearchParams();
   const refreshTokenFromUrl = searchParams.get("refreshToken");
   const accessTokenFromUrl = searchParams.get("accessToken");
