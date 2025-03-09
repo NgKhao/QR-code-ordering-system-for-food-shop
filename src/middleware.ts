@@ -4,6 +4,10 @@ import { Role } from "./constants/type";
 import { TokenPayload } from "./types/jwt.types";
 import jwt from "jsonwebtoken";
 
+export const decodeToken = (token: string) => {
+  return jwt.decode(token) as TokenPayload;
+};
+
 const managePaths = ["/manage"];
 const onlyOwnerPaths = ["/manage/accounts"];
 const guestPaths = ["/guest"];
@@ -67,12 +71,4 @@ export function middleware(request: NextRequest) {
 }
 
 // See "Matching Paths" below to learn more
-export const config = {
-  // Đường dẫn cố định (e.g., "/login").
-  // Đường dẫn động với tham số (e.g., "/manage/:path*").
-  matcher: ["/manage/:path*", "/guest/:path*", "/login"],
-};
-
-export const decodeToken = (token: string) => {
-  return jwt.decode(token) as TokenPayload;
-};
+export const matcher = ["/manage/:path*", "/guest/:path*", "/login"];
