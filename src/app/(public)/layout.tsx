@@ -5,13 +5,12 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import DarkModeToggle from "@/components/dark-mode-toggle";
 import NavItems from "@/app/(public)/nav-items";
 
-export default function Layout({
-  children,
-  modal,
-}: Readonly<{
+interface LayoutProps {
   children: React.ReactNode;
-  modal?: React.ReactNode;
-}>) {
+  modal: React.ReactNode;
+}
+
+export default function Layout({ children, modal }: LayoutProps) {
   return (
     <div className="flex min-h-screen w-full flex-col relative">
       <header className="sticky z-20 top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">

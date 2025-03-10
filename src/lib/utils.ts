@@ -229,7 +229,6 @@ export const OrderStatusIcon = {
   [OrderStatus.Delivered]: Truck,
   [OrderStatus.Paid]: HandCoins,
 };
-export { decodeToken };
 
 export const wrapServerApi = async <T>(fn: () => Promise<T>) => {
   let result = null;

@@ -6,9 +6,7 @@ import DishDetail from "@/app/(public)/dishes/[id]/dish-detail";
 export default async function DishPage({
   params,
 }: {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const data = await wrapServerApi(() => dishApiRequest.getDish(Number(id)));

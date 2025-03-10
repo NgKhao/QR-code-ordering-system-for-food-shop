@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import RefreshToken from "./refresh-token";
 import { useEffect } from "react";
 import {
-  decodeToken,
   generateSocketInstance,
   getAccessTokenFromLocalStorage,
   removeTokensFromLocalStorage,
@@ -13,6 +12,7 @@ import { RoleType } from "@/types/jwt.types";
 import type { Socket } from "socket.io-client";
 import ListenLogoutSocket from "./listen-logout-socket";
 import { create } from "zustand";
+import { decodeToken } from "@/middleware";
 // Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
