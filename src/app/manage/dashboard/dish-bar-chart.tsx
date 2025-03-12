@@ -14,6 +14,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { DashboardIndicatorResType } from "@/schemaValidations/indicator.schema";
+import { BarChart3Icon } from "lucide-react";
 import { Bar, BarChart, XAxis, YAxis } from "recharts";
 
 const colors = [
@@ -65,10 +66,13 @@ export function DishBarChart({
     };
   });
   return (
-    <Card>
+    <Card className="lg:col-span-3 transition-all hover:shadow-md bg-gradient-to-br from-white to-slate-50">
       <CardHeader>
-        <CardTitle>Xếp hạng món ăn</CardTitle>
-        <CardDescription>Được gọi nhiều nhất</CardDescription>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg font-medium">Món bán chạy</CardTitle>
+          <BarChart3Icon className="h-5 w-5 text-primary" />
+        </div>
+        <CardDescription>Top các món được gọi nhiều nhất</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

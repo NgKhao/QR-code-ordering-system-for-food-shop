@@ -255,7 +255,7 @@ export default function OrderTable() {
               <Input
                 type="datetime-local"
                 placeholder="Từ ngày"
-                className="text-sm"
+                className="text-sm transition-all hover:shadow-md bg-gradient-to-br from-white to-slate-50"
                 value={format(fromDate, "yyyy-MM-dd HH:mm").replace(" ", "T")}
                 onChange={(event) => setFromDate(new Date(event.target.value))}
               />
@@ -265,6 +265,7 @@ export default function OrderTable() {
               <Input
                 type="datetime-local"
                 placeholder="Đến ngày"
+                className="transition-all hover:shadow-md bg-gradient-to-br from-white to-slate-50"
                 value={format(toDate, "yyyy-MM-dd HH:mm").replace(" ", "T")}
                 onChange={(event) => setToDate(new Date(event.target.value))}
               />

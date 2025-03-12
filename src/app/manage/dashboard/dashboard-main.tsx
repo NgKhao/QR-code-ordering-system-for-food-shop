@@ -34,13 +34,13 @@ export default function DashboardMain() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 py-4">
         <div className="flex items-center">
           <span className="mr-2">Từ</span>
           <Input
             type="datetime-local"
             placeholder="Từ ngày"
-            className="text-sm"
+            className="text-sm transition-all hover:shadow-md bg-gradient-to-br from-white to-slate-50"
             value={format(fromDate, "yyyy-MM-dd HH:mm").replace(" ", "T")}
             onChange={(event) => setFromDate(new Date(event.target.value))}
           />
@@ -50,6 +50,7 @@ export default function DashboardMain() {
           <Input
             type="datetime-local"
             placeholder="Đến ngày"
+            className="transition-all hover:shadow-md bg-gradient-to-br from-white to-slate-50"
             value={format(toDate, "yyyy-MM-dd HH:mm").replace(" ", "T")}
             onChange={(event) => setToDate(new Date(event.target.value))}
           />
@@ -59,7 +60,7 @@ export default function DashboardMain() {
         </Button>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+        <Card className="transition-all hover:shadow-md bg-gradient-to-br from-white to-slate-50">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               Tổng doanh thu
@@ -81,7 +82,7 @@ export default function DashboardMain() {
             <div className="text-2xl font-bold">{formatCurrency(revenue)}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="transition-all hover:shadow-md bg-gradient-to-br from-white to-slate-50">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Khách</CardTitle>
             <svg
@@ -104,7 +105,7 @@ export default function DashboardMain() {
             <p className="text-xs text-muted-foreground">Gọi món</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="transition-all hover:shadow-md bg-gradient-to-br from-white to-slate-50">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Đơn hàng</CardTitle>
             <svg
@@ -126,7 +127,7 @@ export default function DashboardMain() {
             <p className="text-xs text-muted-foreground">Đã thanh toán</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="transition-all hover:shadow-md bg-gradient-to-br from-white to-slate-50">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               Bàn đang phục vụ
@@ -149,7 +150,7 @@ export default function DashboardMain() {
           </CardContent>
         </Card>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
         <div className="lg:col-span-4">
           <RevenueLineChart revenueByDate={revenueByDate} />
         </div>

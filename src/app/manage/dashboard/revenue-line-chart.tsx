@@ -3,6 +3,7 @@
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -16,6 +17,7 @@ import {
 import { DashboardIndicatorResType } from "@/schemaValidations/indicator.schema";
 import { format } from "date-fns";
 import { parse } from "date-fns/parse";
+import { TrendingUpIcon } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 const chartConfig = {
@@ -31,9 +33,14 @@ export function RevenueLineChart({
   revenueByDate: DashboardIndicatorResType["data"]["revenueByDate"];
 }) {
   return (
-    <Card>
+    <Card className="lg:col-span-4 transition-all hover:shadow-md bg-gradient-to-br from-white to-slate-50">
       <CardHeader>
-        <CardTitle>Doanh thu</CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle>Doanh thu theo thời gian</CardTitle>
+          <TrendingUpIcon className="h-5 w-5 text-primary" />
+        </div>
+
+        <CardDescription>Theo dõi xu hướng doanh thu theo ngày</CardDescription>
         {/* <CardDescription>January - June 2024</CardDescription> */}
       </CardHeader>
       <CardContent>
