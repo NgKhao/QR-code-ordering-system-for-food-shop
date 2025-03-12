@@ -11,13 +11,15 @@ export default function Quantity({
   value: number;
 }) {
   return (
-    <div className="flex gap-1 ">
+    <div className="flex items-center rounded-full border border-orange-200 p-1 bg-white">
       <Button
-        className="h-6 w-6 p-0"
+        variant="ghost"
+        size="icon"
+        className="h-7 w-7 rounded-full hover:bg-orange-100 text-orange-500"
         disabled={value == 0}
         onClick={() => onChange(value - 1)}
       >
-        <Minus className="w-3 h-3" />
+        <Minus className="h-4 w-4" />
       </Button>
       <Input
         type="text"
@@ -32,8 +34,13 @@ export default function Quantity({
           onChange(numberValue);
         }}
       />
-      <Button className="h-6 w-6 p-0" onClick={() => onChange(value + 1)}>
-        <Plus className="w-3 h-3" />
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-7 w-7 rounded-full hover:bg-orange-100 text-orange-500"
+        onClick={() => onChange(value + 1)}
+      >
+        <Plus className="h-4 w-4" />
       </Button>
     </div>
   );

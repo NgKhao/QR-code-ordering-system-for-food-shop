@@ -29,15 +29,15 @@ export default function RootLayout({
         )}
       >
         <AppProvider>
-          <ThemeProvider
-            attribute="class"
+          {/* <ThemeProvider
+          attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-          >
-            {children}
-            <Toaster />
-          </ThemeProvider>
+          > */}
+          {children}
+          <Toaster />
+          {/* </ThemeProvider> */}
         </AppProvider>
       </body>
     </html>

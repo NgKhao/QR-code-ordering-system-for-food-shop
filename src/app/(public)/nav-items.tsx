@@ -100,7 +100,7 @@ export default function NavItems({ className }: { className?: string }) {
             <AlertDialogHeader>
               <AlertDialogTitle>Bạn có muốn đăng xuất không?</AlertDialogTitle>
               <AlertDialogDescription>
-                Việc đăng xuất có thể làm mất đi hóa đơn của bạnbạn
+                Việc đăng xuất có thể làm mất đi hóa đơn của bạn
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

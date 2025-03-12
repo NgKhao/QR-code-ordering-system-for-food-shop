@@ -3,8 +3,7 @@ import OrdersCart from "@/app/guest/orders/orders-cart";
 
 export default function Page() {
   return (
-    <div className="max-w-[400px] mx-auto space-y-4">
-      <h1 className="text-center text-xl font-bold">Đơn hàng</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-4 px-2">
       <OrdersCart />
     </div>
   );

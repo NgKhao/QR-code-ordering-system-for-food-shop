@@ -214,6 +214,10 @@ export const formatDateTimeToTimeString = (date: string | Date) => {
   return format(date instanceof Date ? date : new Date(date), "HH:mm:ss");
 };
 
+export const formatDateTimeToDateString = (date: string | Date) => {
+  return format(date instanceof Date ? date : new Date(date), "dd/MM/yyyy");
+};
+
 export const generateSocketInstance = (accessToken: string) => {
   return io(envConfig.NEXT_PUBLIC_API_ENDPOINT, {
     auth: {
@@ -240,4 +244,16 @@ export const wrapServerApi = async <T>(fn: () => Promise<T>) => {
     }
   }
   return result;
+};
+
+// Hàm lấy màu sắc cho badge trạng thái
+const getStatusBadgeVariant = (status : (typeof OrderStatus)[keyof typeof OrderStatus]) => {
+  const variantMap = {
+    Pending: 'secondary',
+    Processing: 'warning',
+    Rejected: 'destructive',
+    Delivered: 'success',
+    Paid: 'primary'
+  };
+  return variantMap[status] || 'default';
 };

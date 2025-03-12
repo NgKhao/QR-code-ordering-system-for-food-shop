@@ -1,6 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
@@ -15,6 +22,7 @@ import { useEffect } from "react";
 import { useGuestLoginMutation } from "@/queries/useGuest";
 import { useAppStore } from "@/components/app-provider";
 import { generateSocketInstance, handleErrorApi } from "@/lib/utils";
+import { Coffee, User, Utensils, Lock } from "lucide-react";
 
 export default function GuestLoginForm() {
   const setRole = useAppStore((stase) => stase.setRole);
@@ -57,39 +65,74 @@ export default function GuestLoginForm() {
   };
 
   return (
-    <Card className="mx-auto max-w-sm">
-      <CardHeader>
-        <CardTitle className="text-2xl">Đăng nhập gọi món</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form
-            className="space-y-2 max-w-[600px] flex-shrink-0 w-full"
-            noValidate
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
-            <div className="grid gap-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 p-4">
+      <Card className="w-full max-w-md shadow-lg border-none">
+        <CardHeader className="pb-4 space-y-1 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-t-lg">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-2xl font-bold">
+              Đăng nhập gọi món
+            </CardTitle>
+            <Coffee className="h-6 w-6" />
+          </div>
+          <CardDescription className="text-orange-100">
+            Chào mừng quý khách đến với dịch vụ đặt món của chúng tôi
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <Form {...form}>
+            <form
+              className="space-y-4"
+              noValidate
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
-                  <FormItem>
-                    <div className="grid gap-2">
-                      <Label htmlFor="name">Tên khách hàng</Label>
-                      <Input id="name" type="text" required {...field} />
+                  <FormItem className="space-y-3">
+                    <div className="flex items-center">
+                      <Label
+                        htmlFor="name"
+                        className="text-lg font-medium flex items-center gap-2"
+                      >
+                        <User className="h-4 w-4" />
+                        Tên khách hàng
+                      </Label>
+                    </div>
+                    <div className="relative">
+                      <Input
+                        id="name"
+                        type="text"
+                        required
+                        className="pl-3 pr-3 py-6 text-lg border-2 focus:border-orange-400 focus:ring-orange-400"
+                        placeholder="Nhập tên của bạn"
+                        {...field}
+                      />
                       <FormMessage />
                     </div>
                   </FormItem>
                 )}
               />
 
-              <Button type="submit" className="w-full">
-                Đăng nhập
-              </Button>
-            </div>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+              <div className="pt-3">
+                <Button
+                  type="submit"
+                  className="w-full py-6 text-lg bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 transition-all duration-300 shadow-md"
+                >
+                  <Utensils className="mr-2 h-5 w-5" /> Đăng nhập
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className="flex flex-col space-y-2 border-t px-6 py-4 text-center text-sm text-gray-600">
+          <p>Đặt món nhanh chóng - Phục vụ tận tâm</p>
+          <div className="flex items-center justify-center space-x-1">
+            <Lock className="h-3 w-3" />
+            <span>Bảo mật thông tin khách hàng</span>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }
