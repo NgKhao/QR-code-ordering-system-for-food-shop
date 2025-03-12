@@ -37,8 +37,19 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function OrdersCart() {
   const { data, refetch } = useGuestGetOrderListQuery();
-  console.log(data);
+  // console.log(data);
   const orders = useMemo(() => data?.payload.data ?? [], [data]);
+  const date = useMemo(() => {
+    return orders.length > 0
+      ? formatDateTimeToDateString(orders[0].createdAt)
+      : "";
+  }, [orders]);
+
+  const time = useMemo(() => {
+    return orders.length > 0
+      ? formatDateTimeToTimeString(orders[0].createdAt)
+      : "";
+  }, [orders]);
   // console.log(orders);
   const socket = useAppStore((stase) => stase.socket);
   const { waitingForPaying, paid } = useMemo(() => {
@@ -197,10 +208,7 @@ export default function OrdersCart() {
               variant="outline"
               className="bg-white/20 text-white border-none"
             >
-              <Calendar className="h-3 w-3 mr-1" />{" "}
-              {formatDateTimeToDateString(
-                data?.payload.data[0].createdAt as unknown as string
-              )}
+              <Calendar className="h-3 w-3 mr-1" /> {date}
             </Badge>
           </div>
           <p className="text-sm mt-1 opacity-90">
@@ -215,10 +223,7 @@ export default function OrdersCart() {
               {waitingForPaying.quantity + paid.quantity} món
             </span>
             <span className="flex items-center gap-1">
-              <Clock className="h-4 w-4" /> Thời gian:{" "}
-              {formatDateTimeToTimeString(
-                data?.payload.data[0].createdAt as unknown as string
-              )}
+              <Clock className="h-4 w-4" /> Thời gian: {time}
             </span>
           </div>
 
