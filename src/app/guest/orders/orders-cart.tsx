@@ -52,7 +52,7 @@ export default function OrdersCart() {
   }, [orders]);
   // console.log(orders);
   const socket = useAppStore((stase) => stase.socket);
-  const { waitingForPaying, paid } = useMemo(() => {
+  const { waitingForPaying, paid, toltalOrder } = useMemo(() => {
     return orders.reduce(
       (result, order) => {
         if (
@@ -68,6 +68,7 @@ export default function OrdersCart() {
                 order.dishSnapshot.price * order.quantity,
               quantity: result.waitingForPaying.quantity + order.quantity,
             },
+            toltalOrder: result.toltalOrder + order.quantity,
           };
         }
         if (order.status == OrderStatus.Paid) {
@@ -78,9 +79,13 @@ export default function OrdersCart() {
                 result.paid.price + order.dishSnapshot.price * order.quantity,
               quantity: result.paid.quantity + order.quantity,
             },
+            toltalOrder: result.toltalOrder + order.quantity,
           };
         }
-        return result;
+        return {
+          ...result,
+          toltalOrder: result.toltalOrder + 1,
+        };
       },
       {
         waitingForPaying: {
@@ -91,6 +96,7 @@ export default function OrdersCart() {
           price: 0,
           quantity: 0,
         },
+        toltalOrder: 0,
       }
     );
   }, [orders]);
@@ -219,8 +225,7 @@ export default function OrdersCart() {
         <CardContent className="p-4">
           <div className="flex justify-between text-sm text-gray-500 mb-3">
             <span className="flex items-center gap-1">
-              <ShoppingBag className="h-4 w-4" /> Tổng đơn:{" "}
-              {waitingForPaying.quantity + paid.quantity} món
+              <ShoppingBag className="h-4 w-4" /> Tổng đơn: {toltalOrder} món
             </span>
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" /> Thời gian: {time}
