@@ -56,6 +56,7 @@ import EditDish from "@/app/manage/dishes/edit-dish";
 import AddDish from "@/app/manage/dishes/add-dish";
 import { useDeleteDishMutation, useGetDishList } from "@/queries/useDish";
 import { toast } from "@/hooks/use-toast";
+import { SearchIcon } from "lucide-react";
 
 type DishItem = DishListResType["data"][0];
 
@@ -142,8 +143,52 @@ export const columns: ColumnDef<DishItem>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={openEditDish}>Sửa</DropdownMenuItem>
-            <DropdownMenuItem onClick={openDeleteDish}>Xóa</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={openEditDish}
+              className="cursor-pointer flex items-center"
+            >
+              <span className="bg-blue-100 p-1 rounded-md mr-2">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-blue-600"
+                >
+                  <path
+                    d="M11.8536 1.14645C11.6583 0.951184 11.3417 0.951184 11.1465 1.14645L3.71455 8.57836C3.62459 8.66832 3.55263 8.77461 3.50251 8.89155L2.04044 12.303C1.9599 12.491 2.00189 12.709 2.14646 12.8536C2.29103 12.9981 2.50905 13.0401 2.69697 12.9596L6.10847 11.4975C6.2254 11.4474 6.3317 11.3754 6.42166 11.2855L13.8536 3.85355C14.0488 3.65829 14.0488 3.34171 13.8536 3.14645L11.8536 1.14645ZM4.42166 9.28547L11.5 2.20711L12.7929 3.5L5.71455 10.5784L4.21924 11.2192L3.78081 10.7808L4.42166 9.28547Z"
+                    fill="currentColor"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </span>
+              Sửa
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={openDeleteDish}
+              className="cursor-pointer flex items-center text-red-600"
+            >
+              <span className="bg-red-100 p-1 rounded-md mr-2">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-red-600"
+                >
+                  <path
+                    d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H3.5C3.22386 4 3 3.77614 3 3.5ZM3.5 5C3.22386 5 3 5.22386 3 5.5C3 5.77614 3.22386 6 3.5 6H4V11.5C4 12.3284 4.67157 13 5.5 13H9.5C10.3284 13 11 12.3284 11 11.5V6H11.5C11.7761 6 12 5.77614 12 5.5C12 5.22386 11.7761 5 11.5 5H3.5ZM5 6H10V11.5C10 11.7761 9.77614 12 9.5 12H5.5C5.22386 12 5 11.7761 5 11.5V6Z"
+                    fill="currentColor"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </span>
+              Xóa
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -260,14 +305,20 @@ export default function DishTable() {
           setDishDelete={setDishDelete}
         />
         <div className="flex items-center py-4">
-          <Input
-            placeholder="Lọc tên"
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
+          <div className="relative max-w-sm">
+            <SearchIcon className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+
+            <Input
+              placeholder="Lọc tên món"
+              value={
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("name")?.setFilterValue(event.target.value)
+              }
+              className=" pl-10 max-w-sm  border-slate-200 focus:border-indigo-300 focus:ring-indigo-300"
+            />
+          </div>
           <div className="ml-auto flex items-center gap-2">
             <AddDish />
           </div>
