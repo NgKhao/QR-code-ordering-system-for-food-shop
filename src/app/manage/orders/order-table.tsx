@@ -249,7 +249,7 @@ export default function OrderTable() {
           onSubmitSuccess={() => {}}
         />
         <div className=" flex items-center">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 py-4">
             <div className="flex items-center">
               <span className="mr-2">Từ</span>
               <Input

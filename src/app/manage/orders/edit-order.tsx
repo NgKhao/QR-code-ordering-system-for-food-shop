@@ -41,6 +41,8 @@ import {
   useUpdateOrderMutaion,
 } from "@/queries/useOrder";
 import { toast } from "@/hooks/use-toast";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 export default function EditOrder({
   id,
@@ -118,9 +120,9 @@ export default function EditOrder({
         }
       }}
     >
-      <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
+      {/* <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
-          <DialogTitle>Cập nhật đơn hàng</DialogTitle>
+          <DialogTitle className="text-xl font-semibold">Cập nhật đơn hàng</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -221,6 +223,182 @@ export default function EditOrder({
         <DialogFooter>
           <Button type="submit" form="edit-order-form">
             Lưu
+          </Button>
+        </DialogFooter>
+      </DialogContent> */}
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-auto">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold text-purple-700">
+            Cập nhật đơn hàng
+          </DialogTitle>
+        </DialogHeader>
+        <Separator className="my-4" />
+        <Form {...form}>
+          <form
+            noValidate
+            className="space-y-6"
+            id="edit-order-form"
+            onSubmit={form.handleSubmit(onSubmit, console.log)}
+          >
+            {/* <div className="grid gap-6"> */}
+            <Card className="bg-white shadow-md">
+              <CardContent className="p-6">
+                <FormField
+                  control={form.control}
+                  name="dishId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                        <div className="space-y-1">
+                          <FormLabel className="text-sm font-medium">
+                            Món ăn
+                          </FormLabel>
+                          <div className="flex items-center space-x-4">
+                            <Avatar className="aspect-square w-[100px] h-[100px] rounded-lg border shadow-sm overflow-hidden">
+                              <AvatarImage
+                                src={selectedDish?.image}
+                                className="object-cover"
+                              />
+                              <AvatarFallback className="bg-muted text-xs">
+                                {selectedDish?.name
+                                  ?.substring(0, 2)
+                                  .toUpperCase() || "NA"}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="space-y-1">
+                              <div className="font-medium">
+                                {selectedDish?.name || "Chưa chọn món"}
+                              </div>
+                              {selectedDish?.price && (
+                                <div className="text-sm text-muted-foreground">
+                                  {new Intl.NumberFormat("vi-VN", {
+                                    style: "currency",
+                                    currency: "VND",
+                                  }).format(selectedDish.price)}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <DishesDialog
+                          onChoose={(dish) => {
+                            field.onChange(dish.id);
+                            setSelectedDish(dish);
+                          }}
+                        />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="quantity"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="space-y-2">
+                          <FormLabel
+                            htmlFor="quantity"
+                            className="text-sm font-medium"
+                          >
+                            Số lượng
+                          </FormLabel>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-full"
+                              onClick={() => {
+                                const newValue = Math.max(
+                                  1,
+                                  Number(field.value) - 1
+                                );
+                                field.onChange(newValue);
+                              }}
+                            >
+                              <span>-</span>
+                            </Button>
+                            <Input
+                              id="quantity"
+                              inputMode="numeric"
+                              pattern="[0-9]*"
+                              className="w-16 h-8 text-center"
+                              {...field}
+                              value={field.value}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const numberValue = Number(value);
+                                if (isNaN(numberValue)) {
+                                  return;
+                                }
+                                field.onChange(numberValue);
+                              }}
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-full"
+                              onClick={() => {
+                                const newValue = Number(field.value) + 1;
+                                field.onChange(newValue);
+                              }}
+                            >
+                              <span>+</span>
+                            </Button>
+                          </div>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="status"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="space-y-2">
+                          <FormLabel className="text-sm font-medium">
+                            Trạng thái
+                          </FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Chọn trạng thái" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {OrderStatusValues.map((status) => (
+                                <SelectItem key={status} value={status}>
+                                  {getVietnameseOrderStatus(status)}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+            {/* </div> */}
+          </form>
+        </Form>
+
+        <DialogFooter className="mt-6 flex items-center justify-end gap-2">
+          <Button variant="outline" onClick={() => form.reset()}>
+            Hủy bỏ
+          </Button>
+          <Button type="submit" form="edit-order-form" className="px-6">
+            Lưu thay đổi
           </Button>
         </DialogFooter>
       </DialogContent>
