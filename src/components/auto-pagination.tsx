@@ -73,6 +73,63 @@ export default function AutoPagination({
       }
       return null;
     };
+    // return Array(pageSize)
+    //   .fill(0)
+    //   .map((_, index) => {
+    //     const pageNumber = index + 1;
+
+    //     // Điều kiện để return về ...
+    //     if (
+    //       page <= RANGE * 2 + 1 &&
+    //       pageNumber > page + RANGE &&
+    //       pageNumber < pageSize - RANGE + 1
+    //     ) {
+    //       return renderDotAfter(index);
+    //     } else if (page > RANGE * 2 + 1 && page < pageSize - RANGE * 2) {
+    //       if (pageNumber < page - RANGE && pageNumber > RANGE) {
+    //         return renderDotBefore(index);
+    //       } else if (
+    //         pageNumber > page + RANGE &&
+    //         pageNumber < pageSize - RANGE + 1
+    //       ) {
+    //         return renderDotAfter(index);
+    //       }
+    //     } else if (
+    //       page >= pageSize - RANGE * 2 &&
+    //       pageNumber > RANGE &&
+    //       pageNumber < page - RANGE
+    //     ) {
+    //       return renderDotBefore(index);
+    //     }
+    //     return (
+    //       <PaginationItem key={index}>
+    //         {isLink && (
+    //           <PaginationLink
+    //             href={{
+    //               pathname,
+    //               query: {
+    //                 page: pageNumber,
+    //               },
+    //             }}
+    //             isActive={pageNumber === page}
+    //           >
+    //             {pageNumber}
+    //           </PaginationLink>
+    //         )}
+    //         {!isLink && (
+    //           <Button
+    //             onClick={() => {
+    //               onClick(pageNumber);
+    //             }}
+    //             variant={pageNumber == page ? "outline" : "ghost"}
+    //             className="w-9 h-9 p-0"
+    //           >
+    //             {pageNumber}
+    //           </Button>
+    //         )}
+    //       </PaginationItem>
+    //     );
+    //   });
     return Array(pageSize)
       .fill(0)
       .map((_, index) => {
@@ -84,25 +141,41 @@ export default function AutoPagination({
           pageNumber > page + RANGE &&
           pageNumber < pageSize - RANGE + 1
         ) {
-          return renderDotAfter(index);
+          return (
+            <PaginationItem key={`dotAfter-${index}`}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          );
         } else if (page > RANGE * 2 + 1 && page < pageSize - RANGE * 2) {
           if (pageNumber < page - RANGE && pageNumber > RANGE) {
-            return renderDotBefore(index);
+            return (
+              <PaginationItem key={`dotBefore-${index}`}>
+                <PaginationEllipsis />
+              </PaginationItem>
+            );
           } else if (
             pageNumber > page + RANGE &&
             pageNumber < pageSize - RANGE + 1
           ) {
-            return renderDotAfter(index);
+            return (
+              <PaginationItem key={`dotAfter-${index}`}>
+                <PaginationEllipsis />
+              </PaginationItem>
+            );
           }
         } else if (
           page >= pageSize - RANGE * 2 &&
           pageNumber > RANGE &&
           pageNumber < page - RANGE
         ) {
-          return renderDotBefore(index);
+          return (
+            <PaginationItem key={`dotBefore-${index}`}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          );
         }
         return (
-          <PaginationItem key={index}>
+          <PaginationItem key={pageNumber}>
             {isLink && (
               <PaginationLink
                 href={{

@@ -41,6 +41,9 @@ import { useGetTable, useUpdateTableMutation } from "@/queries/useTable";
 import { useEffect } from "react";
 import { toast } from "@/hooks/use-toast";
 import QRCodeTable from "@/components/qrcode-table";
+import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default function EditTable({
   id,
@@ -113,149 +116,178 @@ export default function EditTable({
       }}
     >
       <DialogContent
-        className="sm:max-w-[600px] max-h-screen overflow-auto"
+        className="sm:max-w-[700px] max-h-[90vh] overflow-auto "
         onCloseAutoFocus={() => {
           form.reset();
           setId(undefined);
         }}
       >
         <DialogHeader>
-          <DialogTitle>Cập nhật bàn ăn</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-purple-700">
+            Cập nhật bàn ăn
+          </DialogTitle>
         </DialogHeader>
+        <Separator className="my-4" />
         <Form {...form}>
           <form
             noValidate
-            className="grid auto-rows-max items-start gap-4 md:gap-8"
+            className="space-y-6"
             id="edit-table-form"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <div className="grid gap-4 py-4">
-              <FormItem>
-                <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                  <Label htmlFor="name">Số hiệu bàn</Label>
-                  <div className="col-span-3 w-full space-y-2">
+            <Card className="bg-white shadow-md">
+              <CardContent className="p-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <FormItem>
+                    <Label
+                      htmlFor="name"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Số hiệu bàn
+                    </Label>
                     <Input
                       id="number"
                       type="number"
-                      className="w-full"
+                      className="mt-1"
                       value={data?.payload.data.number ?? 0}
                       readOnly
                     />
                     <FormMessage />
-                  </div>
-                </div>
-              </FormItem>
-              <FormField
-                control={form.control}
-                name="capacity"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="price">Sức chứa (người)</Label>
-                      <div className="col-span-3 w-full space-y-2">
+                  </FormItem>
+
+                  <FormField
+                    control={form.control}
+                    name="capacity"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label
+                          htmlFor="capacity"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Sức chứa (người)
+                        </Label>
                         <Input
                           id="capacity"
-                          className="w-full"
+                          className="mt-1"
                           {...field}
                           type="number"
                         />
                         <FormMessage />
-                      </div>
-                    </div>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="description">Trạng thái</Label>
-                      <div className="col-span-3 w-full space-y-2">
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                          value={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Chọn trạng thái" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {TableStatusValues.map((status) => (
-                              <SelectItem key={status} value={status}>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white shadow-md">
+              <CardContent className="p-6">
+                <FormField
+                  control={form.control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label
+                        htmlFor="status"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Trạng thái
+                      </Label>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        value={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="mt-1">
+                            <SelectValue placeholder="Chọn trạng thái" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {TableStatusValues.map((status) => (
+                            <SelectItem key={status} value={status}>
+                              <Badge
+                                variant={
+                                  status === TableStatus.Available
+                                    ? "default"
+                                    : status === TableStatus.Reserved
+                                    ? "destructive"
+                                    : "secondary"
+                                }
+                              >
                                 {getVietnameseTableStatus(status)}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
+                              </Badge>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
-                    </div>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="changeToken"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="price">Đổi QR Code</Label>
-                      <div className="col-span-3 w-full space-y-2">
-                        <div className="flex items-center space-x-2">
-                          <Switch
-                            id="changeToken"
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </div>
-                      </div>
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
 
-                      <FormMessage />
-                    </div>
-                  </FormItem>
-                )}
-              />
-              <FormItem>
-                <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                  <Label>QR Code</Label>
-                  <div className="col-span-3 w-full space-y-2">
-                    {data && (
-                      <QRCodeTable
-                        token={data.payload.data.token}
-                        tableNumber={data.payload.data.number}
+            <Card className="bg-white shadow-md">
+              <CardContent className="p-6">
+                <div className="flex justify-between items-center">
+                  <Label
+                    htmlFor="changeToken"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Đổi QR Code
+                  </Label>
+                  <FormField
+                    control={form.control}
+                    name="changeToken"
+                    render={({ field }) => (
+                      <Switch
+                        id="changeToken"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
                       />
                     )}
-                  </div>
+                  />
                 </div>
-              </FormItem>
-              <FormItem>
-                <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                  <Label>URL gọi món</Label>
-                  <div className="col-span-3 w-full space-y-2">
-                    {data && (
+              </CardContent>
+            </Card>
+            {data && (
+              <Card className="bg-white shadow-md">
+                <CardContent className="p-6 ">
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-sm font-medium text-gray-700">
+                        QR Code
+                      </Label>
+                      <div className="mt-2 flex justify-center">
+                        <QRCodeTable
+                          token={data.payload.data.token}
+                          tableNumber={data.payload.data.number}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-sm font-medium text-gray-700">
+                        URL gọi món
+                      </Label>
                       <Link
                         href={getTableLink({
                           token: data.payload.data.token,
                           tableNumber: data.payload.data.number,
                         })}
                         target="_blank"
-                        className="break-all"
+                        className="mt-2 block text-sm text-blue-600 hover:text-blue-800 break-all"
                       >
                         {getTableLink({
                           token: data.payload.data.token,
                           tableNumber: data.payload.data.number,
                         })}
                       </Link>
-                    )}
+                    </div>
                   </div>
-                </div>
-              </FormItem>
-            </div>
+                </CardContent>
+              </Card>
+            )}
           </form>
         </Form>
         <DialogFooter>
