@@ -302,7 +302,7 @@ export default function AddDish() {
           </form>
         </Form>
         <DialogFooter>
-          <Button type="submit" form="add-dish-form" className="w-full mt-0">
+          <Button type="submit" form="add-dish-form" className="w-full">
             Thêm
           </Button>
         </DialogFooter>
