@@ -38,6 +38,7 @@ import {
 import { useAddTableMutation } from "@/queries/useTable";
 import { toast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default function AddTable() {
   const [open, setOpen] = useState(false);
@@ -222,7 +223,17 @@ export default function AddTable() {
                         <SelectContent>
                           {TableStatusValues.map((status) => (
                             <SelectItem key={status} value={status}>
-                              {getVietnameseTableStatus(status)}
+                              <Badge
+                                variant={
+                                  status === TableStatus.Available
+                                    ? "default"
+                                    : status === TableStatus.Reserved
+                                    ? "destructive"
+                                    : "secondary"
+                                }
+                              >
+                                {getVietnameseTableStatus(status)}
+                              </Badge>
                             </SelectItem>
                           ))}
                         </SelectContent>
