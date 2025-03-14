@@ -46,8 +46,9 @@ This project is a comprehensive restaurant management system that allows custome
 
 ### Customer QR Code Ordering Interface
 ![QR Code Scanning](./assets/QRcode.png)
-![Mobile Menu Interface](./assets/menu.png)
-![Order Confirmation](./assets/order.png)
+<img src="./assets/menu.png" width="400" height='700' alt="QR Code Scanning">
+<br>
+<img src="./assets/order.png" width="400" height='700' alt="QR Code Scanning">
 
 ### Management Dashboard
 ![Order Management](./assets/orderManage.png)
