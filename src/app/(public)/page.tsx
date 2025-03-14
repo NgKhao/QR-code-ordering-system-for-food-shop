@@ -53,11 +53,11 @@ export default async function Home() {
       <div className="relative h-[400px] md:h-[500px] rounded-b-lg overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/40 z-10"></div>
         <Image
-          src="/banner.png"
+          src="/nen.webp"
           fill
           priority
           quality={100}
-          alt="Nhà hàng Big Boy"
+          alt="Hồn Việt Quán"
           className="object-cover"
         />
         <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 space-y-6">
@@ -66,7 +66,7 @@ export default async function Home() {
             <ChefHat size={28} />
           </div>
           <h1 className="text-center text-3xl md:text-5xl lg:text-6xl font-bold text-white">
-            Nhà hàng Big Boy
+            Hồn Việt Quán
           </h1>
           <p className="text-center text-lg md:text-xl text-white/90 italic">
             Vị ngon, trọn khoảnh khắc
@@ -131,7 +131,7 @@ export default async function Home() {
       <section className="bg-amber-50 py-16">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold">Tại sao chọn Big Boy?</h2>
+            <h2 className="text-3xl font-bold">Tại sao chọn Hồn Việt Quán?</h2>
             <Separator className="w-24 h-1 bg-amber-500 mx-auto mt-4" />
           </div>
 
@@ -179,7 +179,7 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center md:text-left">
-              <h3 className="text-xl font-bold mb-4">Nhà hàng Big Boy</h3>
+              <h3 className="text-xl font-bold mb-4">Hồn Việt Quán</h3>
               <p className="text-gray-300">
                 Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM
               </p>
@@ -214,7 +214,7 @@ export default async function Home() {
           <Separator className="my-6 bg-gray-700" />
 
           <p className="text-center text-gray-400 text-sm">
-            © {new Date().getFullYear()} Nhà hàng Big Boy. Đã đăng ký bản quyền.
+            © {new Date().getFullYear()} Hồn Việt Quán. Đã đăng ký bản quyền.
           </p>
         </div>
       </section>
