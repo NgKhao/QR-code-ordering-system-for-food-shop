@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QR Code Ordering System for Restaurants
 
-## Getting Started
+![Main Dashboard](./assets/homepage.png)
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project is a comprehensive restaurant management system that allows customers to place orders by scanning QR codes at their tables. It includes both customer-facing interfaces and an administrative dashboard with real-time updates, analytics, and inventory management.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### For Customers
+- **QR Code Table Ordering**: Customers scan QR codes at their tables to access the digital menu
+- **Intuitive Menu Interface**: Easy-to-navigate digital menu with categories, images, and descriptions
+- **Real-time Order Tracking**: Customers can view their order status
+- **Easy Customization**: Option to add special requests or modify dishes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### For Restaurant Management
+- **Real-time Order Management**: View and manage incoming orders with instant notifications
+- **Table Management**: Monitor table status (available, unavailable, reserved)
+- **Menu Management**: Add, edit, or remove menu items, and prices
+- **Staff Account Management**: Create accounts with different roles and permissions
+- **Authentication & Security**: JWT-based authentication system
 
-## Learn More
+### Analytics Dashboard
+- **Daily Revenue Statistics**: Track sales, customer count, and average spending
+- **Order Analytics**: View most popular dishes
+- **Table Utilization**: Monitor table turnover and occupancy rates
+- **Revenue Trends**: Analyze revenue patterns over time (daily, weekly, monthly)
 
-To learn more about Next.js, take a look at the following resources:
+## Technology Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend
+- **Next.js**: For building the user interface
+- **Shadcn UI**: For styling components
+- **Socket.IO Client**: For real-time communication
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Backend
+- **Node.js**: Server-side JavaScript runtime
+- **Fastify**: Web application framework
+- **SQLLite**: Database for storing menu items, orders, and user data
+- **Socket.IO**: For implementing real-time features
+- **JWT (JSON Web Tokens)**: For authentication and authorization
+- **Prisma**: Object-Relational Mapping for Node.js
 
-## Deploy on Vercel
+## Screenshots
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Customer QR Code Ordering Interface
+![QR Code Scanning](./assets/QRcode.png)
+![Mobile Menu Interface](./assets/menu.png)
+![Order Confirmation](./assets/order.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Management Dashboard
+![Order Management](./assets/orderManage.png)
+![Table Management](./assets/tableManage.png)
+![Menu Management](./assets/dishManage.png)
+![Analytics Dashboard](./assets/analytic.png)
+![Account Management](./assets/accManage.png)
+
+
+
+## Installation and Setup
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm
+
+### Setup Instructions
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/NgKhao/QR-code-ordering-system-for-food-shop.git
+   cd QR-code-ordering-system-for-food-shop
+   ```
+
+2. Install dependencies for both backend and frontend:
+   ```bash
+   # Install frontend dependencies
+   cd ../client
+   npm install
+   ```
+
+## Usage Guide
+
+### Customer Flow
+1. Customer scans the QR code at their table
+2. The digital menu opens on their device
+3. They select items and customize as needed
+4. They submit the order
+5. Real-time updates on order status appear on their device
+
+### Admin/Staff Flow
+1. Login to the management dashboard
+2. View real-time incoming orders
+3. Update order status (received, preparing, ready, delivered, paided)
+4. Access analytics and reports
+5. Manage menu items, and prices
+6. Configure table layouts and QR codes
+
+## Contact
+
+NgKhao - [GitHub Profile](https://github.com/NgKhao)
+
+Project Link: [https://github.com/NgKhao/QR-code-ordering-system-for-food-shop](https://github.com/NgKhao/QR-code-ordering-system-for-food-shop)
