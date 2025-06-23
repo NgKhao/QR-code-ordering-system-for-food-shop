@@ -1,19 +1,24 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "localhost",
-        port: "4000",
-        pathname: "/**",
-        search: "",
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '4000',
+        pathname: '/static/**',
       },
       {
-        hostname: "via.placeholder.com",
-        pathname: "*/**",
+        protocol: 'https',
+        hostname: 'smartdine.up.railway.app',
+        pathname: '/static/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        pathname: '/**',
       },
     ],
   },
