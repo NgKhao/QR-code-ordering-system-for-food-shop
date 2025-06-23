@@ -44,6 +44,7 @@ import {
   CommandItem,
   CommandInput,
   CommandList,
+  CommandEmpty,
 } from '@/components/ui/command';
 import {
   Popover,
@@ -322,6 +323,7 @@ export default function OrderTable() {
               <Command>
                 <CommandInput placeholder='Tìm trạng thái...' />
                 <CommandList>
+                  <CommandEmpty>Không tìm thấy trạng thái.</CommandEmpty>
                   <CommandGroup>
                     {OrderStatusValues.map((status) => (
                       <CommandItem
